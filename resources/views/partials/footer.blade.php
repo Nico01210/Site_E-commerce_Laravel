@@ -1,3 +1,3 @@
 <footer>
-    <p>&copy; {{ date('Y') }} Mon Site Laravel</p>
+    <p>&copy; {{ date('Y') }} Replay</p>
 </footer>

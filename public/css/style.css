@@ -1,4 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
 body {
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-family: 'Audiowide', cursive;
+    font-size: 35px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    margin: 60px;
+    color:#400F18;
+}
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+        /* NAVBAR */
+nav {
+    background-color: #8B0000;
+    padding: 10px;
+    display: flex; 
+    justify-content: flex-start; /* aligne le contenu à gauche */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 200px;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;  
+
+}
+nav a {
+    color: white;
+    text-decoration: none;
+ 
+}
+nav ul li:first-child {
+    margin-right: auto; /* pousse les autres éléments vers la droite */
+}
+nav a.active {
+    font-weight: bold;
+    text-decoration: underline; /* optionnel pour renforcer l’effet */
+}
+        /* FOOTER */
+footer {
+    background-color:#8B0000 ;
+    min-height: 80px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;     
+}
+footer p {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+        /* IMAGES */
+
+img {
+    display: flex;
+    justify-content:center,
+    
+}
+.image-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* marge entre les images */
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.image-row img {
+    width: 22%; 
+    height: auto;
+    border-radius: 8px; 
+}
+.image-icone {
+    width: 100%;
+    margin: 40px;
+}
+
+
+.image-icone img {
+    display: block;      /* Pour enlever l'espace blanc sous les images */
+    width: 100%;         /* Image prend toute la largeur disponible */
+    height: auto;        /* Garde la proportion de l'image */
+    margin-bottom: 10px; /* Un petit espace entre les images */
+    border-radius: 8px;
+}
+.image-para-container {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+}
+
+.texte-sur-image {
+    position: absolute;
+    top: 50%; /* centre verticalement */
+    left: 50%; /* centre horizontalement */
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px #000;
+    text-align: center;
+    width: 90%;
+    pointer-events: none; /* le texte ne bloque pas les clics sur l'image */
+}
+
+            /* BUTTONS */
+
+button {
+    display: block;              /* chaque bouton sur sa propre ligne */
+    margin: 40px auto;          /* centre horizontalement avec un espace vertical */
+    background-color: #8B0000;   
+    color: #fff;               
+    border: none;
+    border-radius: 20px;         
+    padding: 20px 32px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button:hover {
+    background-color: white;
+    color:#8B0000;
+ border: 2px solid #8B0000;
+}
+
+/* BARRE DE RECHERCHE */
+
+.search-form {
+    display: flex;
+    justify-content: center; /* centre horizontalement */
+    align-items: center;     /* centre verticalement */
+    margin-bottom: 30px;
+    gap: 10px;
+    width: 100%;             /* prendre toute la largeur possible */
+}
+
+.search-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-container span {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    z-index: 2;
+}
+
+.search-input {
+    padding: 10px 20px 10px 40px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 300px; 
+}
+
+.search-button {
+    cursor: pointer;
+    padding: 10px 20px;
+
 }
