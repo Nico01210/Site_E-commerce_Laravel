@@ -15,12 +15,14 @@ h1 {
     display: flex;
     justify-content: center;
     margin: 60px;
-    color:#400F18;
+    color:#400F10;
+}
+h2  {
+    color:#8B0000;
+    margin: 20px;
 }
 main {
-    max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
 }
 
         /* NAVBAR */
@@ -51,7 +53,6 @@ nav ul li:first-child {
 }
 nav a.active {
     font-weight: bold;
-    text-decoration: underline; /* optionnel pour renforcer l’effet */
 }
         /* FOOTER */
 footer {
@@ -92,6 +93,7 @@ img {
 .image-icone {
     width: 100%;
     margin: 40px;
+    max-width: 1600px;
 }
 
 
@@ -99,7 +101,7 @@ img {
     display: block;      /* Pour enlever l'espace blanc sous les images */
     width: 100%;         /* Image prend toute la largeur disponible */
     height: auto;        /* Garde la proportion de l'image */
-    margin-bottom: 10px; /* Un petit espace entre les images */
+    margin: 20px;
     border-radius: 8px;
 }
 .image-para-container {
@@ -121,6 +123,14 @@ img {
     width: 90%;
     pointer-events: none; /* le texte ne bloque pas les clics sur l'image */
 }
+img.full-width {
+    width: 100vw;       /* largeur de la fenêtre */
+    max-width: 100vw;   /* pas de dépassement */
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
 
             /* BUTTONS */
 
@@ -141,16 +151,40 @@ button:hover {
     color:#8B0000;
  border: 2px solid #8B0000;
 }
-
+.filtrage_buttons  {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;   
+}
+ 
+.filtrage_buttons button {
+    display: inline-block;  /* Pour qu'ils soient côte à côte */
+    margin: 0;              /* Supprime la marge globale */
+    padding: 6px 12px;      /* Réduit la taille */
+    font-size: 0.9em;
+    border-radius: 60px;
+    background-color: #8B0000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 10px;
+}
+.filtrage_buttons button:hover {
+    background-color: white;
+    color: #8B0000;
+    border: 2px solid #8B0000;
+}
 /* BARRE DE RECHERCHE */
 
 .search-form {
     display: flex;
     justify-content: center; /* centre horizontalement */
     align-items: center;     /* centre verticalement */
-    margin-bottom: 30px;
     gap: 10px;
-    width: 100%;             /* prendre toute la largeur possible */
+    width: 100%;             
 }
 
 .search-input-container {
@@ -164,14 +198,14 @@ button:hover {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #888;
+    color: #8B0000;
     z-index: 2;
 }
 
 .search-input {
     padding: 10px 20px 10px 40px;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 2px solid #8B0000;
     width: 300px; 
 }
 
@@ -179,4 +213,55 @@ button:hover {
     cursor: pointer;
     padding: 10px 20px;
 
+}
+
+             /* GALERIE PHOTOS */
+
+
+.galerie.photos {
+    display: flex;
+    flex-wrap: wrap;          /* permet le retour à la ligne */
+    justify-content: center;  
+    gap: 20px;       
+    padding: 20px;
+}
+
+.galerie.photos .photo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.photo-item {
+    text-align: center;
+    width: calc(33.333% - 20px);
+    max-width: 250px;
+}
+
+.photo-caption {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #333;
+}
+.deroulement {
+    margin: 30px;
+}
+.carre-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.carre {
+    width: 100px;
+    height: 100px;
+    background-color: #8B0000;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 5px;
 }

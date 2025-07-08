@@ -3,9 +3,9 @@
 @section('title', 'Accueil')
 
 @section('content')
-        <img src="{{ asset('images/logo.png') }}" width="100%" alt="Logo">
+        <img src="{{ asset('images/logo.png') }}" class="full-width" width="100%" alt="Logo">
         <div class="image-para-container">
-        <img src="{{ asset('images/para.png') }}" width="100%" alt="Para">
+        <img src="{{ asset('images/para.png') }}" class="full-width" width="100%" alt="Para">
      <div class="texte-sur-image">
 Achetez et revendez vos jeux de société en toute simplicité : petits prix pour les passionnés, 
 zéro tracas pour les vendeurs.
