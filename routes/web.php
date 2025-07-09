@@ -40,3 +40,6 @@ Route::get('/inscription', function () {
 Route::get('/moncompte', function () {
     return view('moncompte');
 })->name('moncompte');
+Route::get('/bonlivraison', function () {
+    return view('bonlivraison');
+})->name('bonlivraison');

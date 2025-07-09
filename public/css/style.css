@@ -451,3 +451,10 @@ font-size: 12px;
   vertical-align: middle;
   cursor: pointer;
 }
+.BDL {
+    margin-top: 100px;
+}
+.button-group {
+  display: flex;
+  gap: 10px; /* espace entre les boutons */
+}
