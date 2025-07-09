@@ -10,7 +10,12 @@
     <p> 2. Nous vous fournissons une <strong>estimation du prix de vente</strong>, si cela vous convient il vous suffit de <strong>valider la vente</strong> et de créer un compte ou de vous connecter.</p>
     <p> 3. Une fois la vente validée, nous vous ferons parvenir un <strong>bon de livraison</strong> par mail et dans votre compte, il vous suffit d’imprimer ce dernier et de <strong>déposer vos jeux</strong> en point relais. On se charge du reste !</p>
     </div>
-    <button onclick="window.location.href='{{ url('/acheter') }}'"><strong>Vendre mes jeux</strong></button>
+<div class="btn-container">
+    <button onclick="window.location.href='{{ url('/formulaire-vente') }}'">
+        <strong>Vendre mes jeux</strong>
+    </button>
+</div>
+
 
     <h2>Programme Qualité</h2>
     <div class="deroulement"><p>Nous effectuons un contrôle des jeux réceptionnés afin de s’assurer de l’état du matériel, à la suite de quoi une note est attribué selon certains critères.

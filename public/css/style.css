@@ -4,8 +4,19 @@
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 17px;
-    margin: 0;
-    padding: 0;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex-grow: 1;
+  /* Optionnel, pour que le contenu ne soit pas collé au footer */
+  padding-bottom: 20px;
+  margin: 0 auto;
 }
 
 h1 {
@@ -14,15 +25,12 @@ h1 {
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
-    margin: 60px;
+    margin: 60px 0 0 0;
     color:#400F10;
 }
 h2  {
     color:#8B0000;
     margin: 20px;
-}
-main {
-    margin: 0 auto;
 }
 
         /* NAVBAR */
@@ -60,7 +68,8 @@ footer {
     min-height: 80px;
     display: flex; 
     justify-content: center; 
-    align-items: center;     
+    align-items: center;   
+    margin-top: 100px;  
 }
 footer p {
     color: white;
@@ -177,6 +186,20 @@ button:hover {
     color: #8B0000;
     border: 2px solid #8B0000;
 }
+.btn-vendre {
+    background-color: #8B0000;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 50px;
+}
+.btn-vendre:hover {
+    background-color: #5c0000;
+}
 /* BARRE DE RECHERCHE */
 
 .search-form {
@@ -213,6 +236,28 @@ button:hover {
     cursor: pointer;
     padding: 10px 20px;
 
+}
+.google-button {
+  background-color: white;
+  color: #8B0000;
+  padding: 10px 20px;
+  border: 2px solid #8B0000;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+.google-button:hover {
+  background-color: #8B0000;
+  color: white;
+}
+.inscription {
+font-size: 12px;
+  color: #666;
+  text-align: center;
+  margin: 5px 0;
+  cursor: pointer;
 }
 
              /* GALERIE PHOTOS */
@@ -255,6 +300,7 @@ button:hover {
     flex-wrap: wrap;
 }
 
+        /* CARRES ROUGES */
 .carre {
     width: 200px;
     height: 200px;
@@ -277,4 +323,131 @@ button:hover {
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
+}
+/* FORMULAIRE DE VENTE */ 
+
+.form-vente {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.form-vente .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-vente label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #8B0000;
+}
+
+.form-vente input {
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-vente button {
+    background-color: #8B0000;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+    border-radius: 40px;
+}
+
+.form-vente button:hover {
+    background-color: white;
+    color: #8B0000;
+    border: 2px solid #8B0000;
+}
+
+            /* FORMULAIURES DE CONNEXION */
+             
+
+.conex-form {
+    display: flex;
+    flex-direction: column;
+}
+.conex-form input{
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 5px;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-top: 40px;
+}
+.mot-de-passe-oublie {
+    text-align: center;
+    cursor: pointer;   /* si tu veux montrer que c’est cliquable */
+}
+.forgot-password {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  margin: 5px 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.separator hr {
+  flex: 1;
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.separator span {
+  padding: 0 10px;
+  color: #888;
+  font-size: 14px;
+}
+.creation-form {
+  display: flex;
+  flex-direction: column;
+  width: 500px; /* ou une autre largeur */
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.creation-form input { 
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 5px;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+.checkbox-label {
+  font-size: 0.85rem; /* taille de police réduite */
+  display: block;     /* pour gérer la marge plus facilement */
+  margin-top: 15px;   /* marge au-dessus */
+  margin-bottom: 15px; /* marge en dessous */
+  cursor: pointer;
+  line-height: 1.3;   /* un peu d'espace entre les lignes si le texte est long */
+  text-align: center; /* centre le texte sous la checkbox */
+}
+
+.checkbox-label input[type="checkbox"] {
+  transform: scale(0.9); /* optionnel : réduit légèrement la taille de la case */
+  margin-right: 8px;
+  vertical-align: middle;
+  cursor: pointer;
 }
