@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BackofficeController;
 
 
 
@@ -47,3 +48,4 @@ Route::get('/bonlivraison', function () {
 })->name('bonlivraison');
 
 Route::get('/produits', [ProductController::class, 'index']);
+Route::get('/backoffice', [BackofficeController::class, 'index']);
