@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ProductController;
+
 
 
 Route::get('/', function () {
@@ -43,3 +45,5 @@ Route::get('/moncompte', function () {
 Route::get('/bonlivraison', function () {
     return view('bonlivraison');
 })->name('bonlivraison');
+
+Route::get('/produits', [ProductController::class, 'index']);
