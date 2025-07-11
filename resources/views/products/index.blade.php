@@ -32,11 +32,18 @@
 @if ($products->isEmpty())
     <p style="text-align: center;">Aucun produit disponible.</p>
 @else
-    <ul>
-        @foreach ($products as $product)
-            <li>{{ $product->name }} - {{ $product->price }} €</li>
-        @endforeach
-    </ul>
+<ul>
+@foreach ($products as $product)
+    <li>
+        {{ $product->name }} - {{ $product->price }} €  
+        @if ($product->category)
+            (Catégorie : {{ $product->category->name }})
+        @else
+            (Pas de catégorie)
+        @endif
+    </li>
+@endforeach
+</ul>
 @endif
 </body>
 </html>

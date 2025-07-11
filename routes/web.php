@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BackofficeController;
+use App\Http\Controllers\Backoffice\ProductController as BackofficeProductController;
+
 
 
 
@@ -49,3 +51,14 @@ Route::get('/bonlivraison', function () {
 
 Route::get('/produits', [ProductController::class, 'index']);
 Route::get('/backoffice', [BackofficeController::class, 'index']);
+
+
+Route::prefix('backoffice')->group(function () {
+    Route::get('/products', [BackofficeProductController::class, 'index'])->name('products.index');
+    Route::get('/product/new', [BackofficeProductController::class, 'create'])->name('products.create');
+    Route::post('/product', [BackofficeProductController::class, 'store'])->name('products.store');
+    Route::get('/product/{id}', [BackofficeProductController::class, 'show'])->name('products.show');
+    Route::get('/product/{id}/edit', [BackofficeProductController::class, 'edit'])->name('products.edit');
+    Route::put('/product/{id}', [BackofficeProductController::class, 'update'])->name('products.update');
+    Route::delete('/product/{id}', [BackofficeProductController::class, 'destroy'])->name('products.destroy');
+});

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
-{
-    protected $table = 'products'; // optionnel si le nom correspond
-}
+    {
+         protected $fillable = ['name', 'price', 'description', 'stock', 'etat']; // adapte selon ta table
+
+    }
+
