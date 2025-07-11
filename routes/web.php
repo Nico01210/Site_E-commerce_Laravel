@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BackofficeController;
 use App\Http\Controllers\Backoffice\ProductController as BackofficeProductController;
+use App\Http\Controllers\CategoryController;
 
 
 
@@ -62,3 +63,7 @@ Route::prefix('backoffice')->group(function () {
     Route::put('/product/{id}', [BackofficeProductController::class, 'update'])->name('products.update');
     Route::delete('/product/{id}', [BackofficeProductController::class, 'destroy'])->name('products.destroy');
 });
+
+Route::get('/categories', [CategoryController::class, 'index']);
+
+Route::get('/products', [ProductController::class, 'index']);

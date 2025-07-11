@@ -15,8 +15,10 @@ Schema::create('products', function (Blueprint $table) {
     $table->id();
     $table->string('name');
     $table->decimal('price', 8, 2);
+    $table->string('image')->nullable(); // chemin relatif de l'image
     $table->integer('stock');
     $table->string('etat'); // champ supplémentaire
+    $table->foreignId('category_id')->constrained()->onDelete('cascade');
     $table->timestamps();
 });
     }
