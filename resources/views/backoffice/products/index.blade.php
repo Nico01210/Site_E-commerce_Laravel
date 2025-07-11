@@ -21,7 +21,6 @@
             </li>
         @endforeach
     </ul>
-                @endforeach
         </ul>
     @endif
 </body>
