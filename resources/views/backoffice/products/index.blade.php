@@ -13,7 +13,15 @@
         <ul>
             @foreach($products as $product)
                 <li>{{ $product->name }} - {{ $product->price }} €</li>
-            @endforeach
+              <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Supprimer</button>
+                </form>
+            </li>
+        @endforeach
+    </ul>
+                @endforeach
         </ul>
     @endif
 </body>

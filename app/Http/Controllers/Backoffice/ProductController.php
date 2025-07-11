@@ -14,8 +14,7 @@ class ProductController extends Controller
 public function index()
 {
     $products = Product::all();
-    return view('backoffice.products.index', compact('products'));
-}
+    return view('backoffice.products.index', compact('products'));}
 
 // Formulaire de création
 public function create()

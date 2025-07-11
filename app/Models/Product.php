@@ -9,4 +9,3 @@ class Product extends Model
          protected $fillable = ['name', 'price', 'description', 'stock', 'etat']; // adapte selon ta table
 
     }
-
