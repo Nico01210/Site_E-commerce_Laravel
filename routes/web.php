@@ -6,13 +6,14 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BackofficeController;
 use App\Http\Controllers\Backoffice\ProductController as BackofficeProductController;
 use App\Http\Controllers\CategoryController;
-
-
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\AddressController;
 
 
 Route::get('/', function () {
     return view('home');
 });
+
 Route::get('/acheter', function () {
     return view('acheter');
 });
@@ -27,15 +28,14 @@ Route::get('/apropos', function () {
 
 Route::get('/moncompte', function () {
     return view('moncompte');
-});
-Route::get('/formulaire-vente', function () {
-    return view('formulaire-vente'); // sans l'extension .php ni le dossier views
-})->name('formulaire-de-vente');
-Route::post('/formulaire-vente', function (Request $request) {
-    // Ici tu traites les données du formulaire
-    // Par exemple : sauvegarder en BDD, envoyer un mail, etc.
+})->name('moncompte');
 
-    // Pour test : retourner les données
+Route::get('/formulaire-vente', function () {
+    return view('formulaire-vente');
+})->name('formulaire-de-vente');
+
+Route::post('/formulaire-vente', function (Request $request) {
+    // Traitement du formulaire de vente
     return dd($request->all());
 })->name('vente.submit');
 
@@ -43,16 +43,16 @@ Route::get('/inscription', function () {
     return view('inscription');
 })->name('inscription');
 
-Route::get('/moncompte', function () {
-    return view('moncompte');
-})->name('moncompte');
 Route::get('/bonlivraison', function () {
     return view('bonlivraison');
 })->name('bonlivraison');
 
+// Routes produits
 Route::get('/produits', [ProductController::class, 'index']);
-Route::get('/backoffice', [BackofficeController::class, 'index']);
+Route::get('/products', [ProductController::class, 'index']); // doublon possible, à garder si besoin
 
+// Route backoffice
+Route::get('/backoffice', [BackofficeController::class, 'index']);
 
 Route::prefix('backoffice')->group(function () {
     Route::get('/products', [BackofficeProductController::class, 'index'])->name('products.index');
@@ -66,4 +66,7 @@ Route::prefix('backoffice')->group(function () {
 
 Route::get('/categories', [CategoryController::class, 'index']);
 
-Route::get('/products', [ProductController::class, 'index']);
+Route::get('/cart/{userId}', [CartController::class, 'show']);
+
+Route::get('/user/{id}/addresses', [AddressController::class, 'index']);
+
