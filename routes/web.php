@@ -69,4 +69,6 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/cart/{userId}', [CartController::class, 'show']);
 
 Route::get('/user/{id}/addresses', [AddressController::class, 'index']);
+Route::put('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
+
 
