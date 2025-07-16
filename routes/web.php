@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\AddressController;
 
 
+
 Route::get('/', function () {
     return view('home');
 });
@@ -48,21 +49,22 @@ Route::get('/bonlivraison', function () {
 })->name('bonlivraison');
 
 // Routes produits
-Route::get('/produits', [ProductController::class, 'index']);
 Route::get('/products', [ProductController::class, 'index']); // doublon possible, à garder si besoin
 
 // Route backoffice
-Route::get('/backoffice', [BackofficeController::class, 'index']);
+Route::get('/backoffice', [BackofficeProductController::class, 'index']);
 
-Route::prefix('backoffice')->group(function () {
-    Route::get('/products', [BackofficeProductController::class, 'index'])->name('products.index');
-    Route::get('/product/new', [BackofficeProductController::class, 'create'])->name('products.create');
-    Route::post('/product', [BackofficeProductController::class, 'store'])->name('products.store');
-    Route::get('/product/{id}', [BackofficeProductController::class, 'show'])->name('products.show');
-    Route::get('/product/{id}/edit', [BackofficeProductController::class, 'edit'])->name('products.edit');
-    Route::put('/product/{id}', [BackofficeProductController::class, 'update'])->name('products.update');
-    Route::delete('/product/{id}', [BackofficeProductController::class, 'destroy'])->name('products.destroy');
+Route::prefix('backoffice')->name('backoffice.')->group(function () {
+    Route::get('/produits', [BackofficeProductController::class, 'index'])->name('produits.index');
+    Route::get('/produit/new', [BackofficeProductController::class,  'create'])->name('produits.create');
+    Route::post('/produits', [BackofficeProductController::class, 'store'])->name('produits.store');
+    Route::get('/produit/{produit}', [BackofficeProductController::class, 'show'])->name('produits.show');
+    Route::get('/produit/{produit}/edit', [BackofficeProductController::class, 'edit'])->name('produits.edit');
+    Route::put('/produit/{produit}', [BackofficeProductController::class, 'update'])->name('produits.update');
+    Route::delete('/produit/{produit}', [BackofficeProductController::class, 'destroy'])->name('produits.destroy');
 });
+
+
 
 Route::get('/categories', [CategoryController::class, 'index']);
 
@@ -70,5 +72,4 @@ Route::get('/cart/{userId}', [CartController::class, 'show']);
 
 Route::get('/user/{id}/addresses', [AddressController::class, 'index']);
 Route::put('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
-
 

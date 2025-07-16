@@ -1,22 +1,53 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Liste des produits</title>
-</head>
-<body>
-<h1>Liste des produits</h1>
+@extends('layouts.app')
 
-<ul>
-    @foreach ($products as $product)
-        <li style="margin-bottom: 20px;">
-            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" width="100"><br>
-            <strong>{{ $product->name }}</strong><br>
-            {{ $product->description }}<br>
-            Prix : {{ $product->price }} €<br>
-            Catégorie : {{ $product->category->name }}
-        </li>
-    @endforeach
-</ul>
-</body>
-</html>
+@section('content')
+<h1>Gestion des Produits</h1>
+
+
+@if(session()->has('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+<a href="{{ route('backoffice.produits.create') }}" class="btn btn-primary mb-3">Ajouter un produit</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Catégorie</th>
+            <th>Prix (€)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    @forelse($produits as $produit)
+        <tr>
+            <td>{{ $produit->name }}</td>
+            <td>{{ optional($produit->category)->name ?? 'N/A' }}</td>
+            <td>{{ number_format($produit->price, 2, ',', ' ') }}</td>
+            <td>
+                <a href="{{ route('backoffice.produits.edit', $produit) }}" class="btn btn-sm btn-warning">Modifier</a>
+                <form action="{{ route('backoffice.produits.destroy', $produit) }}" method="POST" style="display:inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="return confirm('Supprimer ce produit ?')" type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="4">Aucun produit trouvé.</td>
+        </tr>
+    @endforelse
+    </tbody>
+</table>
+
+{{-- Si tu utilises la pagination Laravel --}}
+@if(method_exists($produits, 'links'))
+    <div>
+        {{ $produits->links() }}
+    </div>
+@endif
+
+@endsection

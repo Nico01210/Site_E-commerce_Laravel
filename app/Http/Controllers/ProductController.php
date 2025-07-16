@@ -37,11 +37,16 @@ class ProductController extends Controller
     }
 
     // Afficher un produit spécifique (facultatif)
-    public function show(string $id)
-    {
-        $product = Product::with('category')->findOrFail($id);
-        return view('products.show', compact('product'));
+public function show($id)
+{
+    $produit = Product::with('categorie')->find($id);
+
+    if (!$produit) {
+        return response()->json(['message' => 'Produit non trouvé'], 404);
     }
+
+    return response()->json($produit);
+}
 
     // Afficher le formulaire d’édition
     public function edit(string $id)
