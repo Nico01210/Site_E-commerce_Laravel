@@ -17,7 +17,7 @@
         <h1>Modifier le produit</h1>
         
         <div class="backoffice-container">
-            <form action="{{ route('backoffice.produits.update', $product->id) }}" method="POST" class="backoffice-form">
+            <form action="{{ route('backoffice.produits.update', $product->id) }}" method="POST" class="backoffice-form" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 
@@ -49,6 +49,21 @@
                     <label for="stock" class="form-label">Stock</label>
                     <input type="number" id="stock" name="stock" value="{{ old('stock', $product->stock) }}" min="0" class="form-input" required>
                     @error('stock')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="image" class="form-label">Image du produit</label>
+                    @if($product->image)
+                        <div style="margin-bottom: 10px;">
+                            <img src="{{ asset($product->image) }}" alt="Image actuelle" style="max-width: 200px; height: auto; border-radius: 5px;">
+                            <p style="font-size: 12px; color: #666;">Image actuelle</p>
+                        </div>
+                    @endif
+                    <input type="file" id="image" name="image" accept="image/*" class="form-input">
+                    <p style="font-size: 12px; color: #666;">Laisser vide pour conserver l'image actuelle</p>
+                    @error('image')
                         <div class="error-message">{{ $message }}</div>
                     @enderror
                 </div>

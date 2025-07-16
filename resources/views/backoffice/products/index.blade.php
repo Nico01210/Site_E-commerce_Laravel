@@ -13,8 +13,9 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>Image</th>
             <th>Nom</th>
-            <th>Catégorie</th>
+            <th>Description</th>
             <th>Prix (€)</th>
             <th>Actions</th>
         </tr>
@@ -23,8 +24,15 @@
     <tbody>
     @forelse($produits as $produit)
         <tr>
+            <td>
+                @if($produit->image)
+                    <img src="{{ asset($produit->image) }}" alt="{{ $produit->name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                @else
+                    <span style="color: #999; font-size: 12px;">Aucune image</span>
+                @endif
+            </td>
             <td>{{ $produit->name }}</td>
-            <td>{{ optional($produit->category)->name ?? 'N/A' }}</td>
+            <td>{{ $produit->description ?? 'Aucune description' }}</td>
             <td>{{ number_format($produit->price, 2, ',', ' ') }}</td>
             <td>
                 <a href="{{ route('backoffice.produits.edit', $produit) }}" class="btn btn-sm btn-warning">Modifier</a>
@@ -37,7 +45,7 @@
         </tr>
     @empty
         <tr>
-            <td colspan="4">Aucun produit trouvé.</td>
+            <td colspan="5">Aucun produit trouvé.</td>
         </tr>
     @endforelse
     </tbody>

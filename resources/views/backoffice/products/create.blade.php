@@ -17,7 +17,7 @@
         <h1>Créer un nouveau produit</h1>
         
         <div class="backoffice-container">
-            <form method="POST" action="{{ route('backoffice.produits.store') }}" class="backoffice-form">
+            <form method="POST" action="{{ route('backoffice.produits.store') }}" class="backoffice-form" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group">
@@ -48,6 +48,14 @@
                     <label for="stock" class="form-label">Stock</label>
                     <input type="number" id="stock" name="stock" value="{{ old('stock', 0) }}" min="0" class="form-input" required>
                     @error('stock')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="image" class="form-label">Image du produit</label>
+                    <input type="file" id="image" name="image" accept="image/*" class="form-input">
+                    @error('image')
                         <div class="error-message">{{ $message }}</div>
                     @enderror
                 </div>

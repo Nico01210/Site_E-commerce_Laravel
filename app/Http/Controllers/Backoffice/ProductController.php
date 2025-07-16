@@ -31,6 +31,7 @@ public function store(Request $request)
         'description' => 'nullable|string',
         'stock' => 'nullable|integer',
         'etat' => 'required|in:BON,CORRECT,TRES BON',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
     // Créer une catégorie par défaut si elle n'existe pas
@@ -45,6 +46,15 @@ public function store(Request $request)
         ]
     );
 
+    // Gérer l'upload de l'image
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        $image->move(public_path('images/products'), $imageName);
+        $imagePath = 'images/products/' . $imageName;
+    }
+
     // Valeur par défaut pour stock si non fourni
     $data = [
         'name' => $validated['name'],
@@ -53,6 +63,7 @@ public function store(Request $request)
         'stock' => isset($validated['stock']) ? $validated['stock'] : 0,
         'etat' => $validated['etat'],
         'category_id' => $defaultCategory->id,
+        'image' => $imagePath,
     ];
 
     Product::create($data);
@@ -78,7 +89,30 @@ public function edit($id)
 public function update(Request $request, $id)
 {
     $product = Product::findOrFail($id);
-    $product->update($request->all());
+    
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'required|numeric',
+        'description' => 'nullable|string',
+        'stock' => 'nullable|integer',
+        'etat' => 'required|in:BON,CORRECT,TRES BON',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Gérer l'upload de la nouvelle image
+    if ($request->hasFile('image')) {
+        // Supprimer l'ancienne image si elle existe
+        if ($product->image && file_exists(public_path($product->image))) {
+            unlink(public_path($product->image));
+        }
+        
+        $image = $request->file('image');
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        $image->move(public_path('images/products'), $imageName);
+        $validated['image'] = 'images/products/' . $imageName;
+    }
+
+    $product->update($validated);
     return redirect()->route('backoffice.produits.index')->with('success', 'Produit mis à jour avec succès !');
 }
 
@@ -86,6 +120,12 @@ public function update(Request $request, $id)
 public function destroy($id)
 {
     $product = Product::findOrFail($id);
+    
+    // Supprimer l'image si elle existe
+    if ($product->image && file_exists(public_path($product->image))) {
+        unlink(public_path($product->image));
+    }
+    
     $product->delete();
     return redirect()->route('backoffice.produits.index')->with('success', 'Produit supprimé avec succès !');
 }

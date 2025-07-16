@@ -8,8 +8,14 @@
 </head>
 <body>
     <header>
-        <nav>
-            <!-- Ton menu backoffice -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <img src="{{ asset('images/petitlogo.png') }}" alt="Logo" class="logo">
+            </div>
+            <ul class="navbar-nav">
+                <li><a href="{{ route('backoffice.produits.index') }}">Liste des produits</a></li>
+                <li><a href="{{ route('backoffice.produits.create') }}">Ajouter un produit</a></li>
+            </ul>
         </nav>
     </header>
 
@@ -17,8 +23,8 @@
         @yield('content')
     </main>
 
-    <footer>
-        <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Backoffice. Tous droits réservés.</p>
     </footer>
 </body>
 </html>
