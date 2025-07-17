@@ -382,6 +382,30 @@ font-size: 12px;
     font-size: 16px;
 }
 
+.form-vente select {
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white;
+}
+
+.form-vente textarea {
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.form-vente label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #8B0000;
+    display: block;
+}
+
 .form-vente button {
     background-color: #8B0000;
     color: white;
@@ -797,6 +821,36 @@ a.btn-cancel {
 .form-input[type="file"] {
     padding: 8px;
     background-color: #f9f9f9;
+}
+
+/* STYLES POUR LA PAGE ACHETER DYNAMIQUE */
+.no-products {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 18px;
+}
+
+.no-products p {
+    margin: 10px 0;
+}
+
+.no-products a {
+    color: #8B0000;
+    text-decoration: underline;
+}
+
+.category {
+    font-size: 0.8em;
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
 }
 
 .form-input[type="file"]:focus {

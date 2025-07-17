@@ -80,4 +80,20 @@ public function show($id)
 
         return redirect()->route('products.index')->with('success', 'Produit supprimé');
     }
+
+    // Afficher les produits pour la page acheter (publique)
+    public function acheter(Request $request)
+    {
+        $query = Product::with('category');
+
+        // Recherche par nom si un terme est fourni
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Récupérer tous les produits avec pagination
+        $products = $query->paginate(12);
+
+        return view('acheter', compact('products'));
+    }
 }
