@@ -1,20 +1,16 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backoffice\ProductController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\BackofficeController;
-use App\Http\Controllers\Backoffice\ProductController as BackofficeProductController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\AddressController;
-
-
 
 Route::get('/', function () {
     return view('home');
 });
 
+// Routes pour les pages du site
 Route::get('/acheter', function () {
     return view('acheter');
 });
@@ -27,49 +23,35 @@ Route::get('/apropos', function () {
     return view('apropos');
 });
 
-Route::get('/moncompte', function () {
-    return view('moncompte');
-})->name('moncompte');
+Route::get('/moncompte', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/moncompte', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/formulaire-vente', function () {
-    return view('formulaire-vente');
-})->name('formulaire-de-vente');
+Route::get('/inscription', [RegisterController::class, 'showRegistrationForm'])->name('inscription');
+Route::post('/inscription', [RegisterController::class, 'register'])->name('register');
 
-Route::post('/formulaire-vente', function (Request $request) {
-    // Traitement du formulaire de vente
-    return dd($request->all());
-})->name('vente.submit');
-
-Route::get('/inscription', function () {
-    return view('inscription');
-})->name('inscription');
-
-Route::get('/bonlivraison', function () {
-    return view('bonlivraison');
-})->name('bonlivraison');
-
-// Routes produits
-Route::get('/products', [ProductController::class, 'index']); // doublon possible, à garder si besoin
-
-// Route backoffice
-Route::get('/backoffice', [BackofficeProductController::class, 'index']);
-
-Route::prefix('backoffice')->name('backoffice.')->group(function () {
-    Route::get('/produits', [BackofficeProductController::class, 'index'])->name('produits.index');
-    Route::get('/produit/new', [BackofficeProductController::class,  'create'])->name('produits.create');
-    Route::post('/produits', [BackofficeProductController::class, 'store'])->name('produits.store');
-    Route::get('/produit/{produit}', [BackofficeProductController::class, 'show'])->name('produits.show');
-    Route::get('/produit/{produit}/edit', [BackofficeProductController::class, 'edit'])->name('produits.edit');
-    Route::put('/produit/{produit}', [BackofficeProductController::class, 'update'])->name('produits.update');
-    Route::delete('/produit/{produit}', [BackofficeProductController::class, 'destroy'])->name('produits.destroy');
+// Route pour accéder au backoffice
+Route::get('/admin', function () {
+    return redirect('/backoffice/produits');
 });
 
+// Routes du backoffice
+Route::get('/backoffice', function () {
+    return redirect('/backoffice/produits');
+});
 
+Route::prefix('backoffice')->name('backoffice.')->group(function () {
+    Route::resource('produits', \App\Http\Controllers\Backoffice\ProductController::class);
+});
 
-Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/cart/{userId}', [CartController::class, 'show']);
+Route::middleware('auth')->group(function () {
+    Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profil', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::get('/user/{id}/addresses', [AddressController::class, 'index']);
-Route::put('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
-
+require __DIR__.'/auth.php';

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'Backoffice')</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <!-- Ajouter Bootstrap ou autre CSS/JS -->
 </head>
 <body>
     <header>
@@ -15,6 +14,15 @@
             <ul class="navbar-nav">
                 <li><a href="{{ route('backoffice.produits.index') }}">Liste des produits</a></li>
                 <li><a href="{{ route('backoffice.produits.create') }}">Ajouter un produit</a></li>
+                <li><a href="{{ url('/') }}">Retour au site</a></li>
+                @auth
+                <li>
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" style="background: none; border: none; color: white; text-decoration: underline; cursor: pointer; font-size: inherit;">Déconnexion</button>
+                    </form>
+                </li>
+                @endauth
             </ul>
         </nav>
     </header>

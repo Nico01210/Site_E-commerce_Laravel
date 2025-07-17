@@ -2,7 +2,7 @@
     <ul>
         <li>
             <a href="/"> 
-                <img src="{{ asset('images/petitlogo.png') }}" alt="Logo" style="height: 40px;">
+                <img src="{{ asset('images/petitlogo.png') }}" alt="Logo" class="logo">
             </a>
         </li>
         <li>
@@ -17,8 +17,17 @@
         <li>
             <a href="{{ url('/apropos') }}" class="{{ request()->is('apropos') ? 'active' : '' }}">À propos</a>
         </li>
+        @auth
+        <li>
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="nav-logout-btn">Déconnexion</button>
+            </form>
+        </li>
+        @else
         <li>
             <a href="{{ url('/moncompte') }}" class="{{ request()->is('moncompte') ? 'active' : '' }}">Mon compte</a>
         </li>
+        @endauth
     </ul>
 </nav>
