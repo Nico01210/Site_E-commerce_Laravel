@@ -72,12 +72,14 @@
                     <label for="etat" class="form-label">État</label>
                     <select id="etat" name="etat" class="form-select" required>
                         <option value="">-- Sélectionner --</option>
-                        <option value="BON" {{ old('etat', $product->etat) == 'BON' ? 'selected' : '' }}>BON</option>
-                        <option value="CORRECT" {{ old('etat', $product->etat) == 'CORRECT' ? 'selected' : '' }}>CORRECT</option>
-                        <option value="TRES BON" {{ old('etat', $product->etat) == 'TRES BON' ? 'selected' : '' }}>TRES BON</option>
+                        <option value="tres_bon" {{ old('etat', $product->etat) == 'tres_bon' ? 'selected' : '' }}>Très bon</option>
+                        <option value="bon" {{ old('etat', $product->etat) == 'bon' ? 'selected' : '' }}>Bon</option>
+                        <option value="correct" {{ old('etat', $product->etat) == 'correct' ? 'selected' : '' }}>Correct</option>
                     </select>
                     @error('etat')
                         <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
                     @enderror
                 </div>
 

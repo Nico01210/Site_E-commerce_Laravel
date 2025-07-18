@@ -116,5 +116,21 @@ public function update(Request $request, $cartId)
 
     return redirect()->route('cart.show', $cart->id)->with('success', 'Panier mis à jour.');
 }
+
+public function clearCart()
+{
+    if (!Auth::check()) {
+        return response()->json(['success' => false, 'message' => 'Non autorisé'], 401);
+    }
+
+    $cart = Cart::where('user_id', Auth::id())->first();
+    
+    if ($cart) {
+        // Supprimer tous les produits du panier
+        $cart->products()->detach();
+    }
+
+    return response()->json(['success' => true, 'message' => 'Panier vidé avec succès']);
+}
 }
 

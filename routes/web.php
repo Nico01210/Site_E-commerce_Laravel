@@ -18,6 +18,7 @@ Route::get('/produit/{id}', [ProductController::class, 'show'])->name('produits.
 Route::post('/panier/ajouter/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/panier', [CartController::class, 'showCart'])->name('cart.show')->middleware('auth');
 Route::delete('/panier/supprimer/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove')->middleware('auth');
+Route::post('/panier/vider', [CartController::class, 'clearCart'])->name('cart.clear')->middleware('auth');
 
 Route::get('/vendre', function () {
     return view('vendre');

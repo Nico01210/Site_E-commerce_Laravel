@@ -68,7 +68,7 @@
                     <div class="total-section">
                         <h3>Total : {{ $total }}€</h3>
                         <div class="cart-actions">
-                            <button class="btn btn-primary btn-large">Procéder au paiement</button>
+                            <button class="btn btn-primary btn-large" onclick="confirmerPaiement()">Procéder au paiement</button>
                         </div>
                     </div>
                 </div>
@@ -81,4 +81,33 @@
             @endif
         </div>
     </div>
+
+<script>
+function confirmerPaiement() {
+    alert('🎉 Merci pour votre commande !\n\nVotre paiement a été validé avec succès.\nVous recevrez un email de confirmation sous peu.\n\n💝 Bons jeux !');
+    
+    // Vider le panier après confirmation
+    fetch('{{ route("cart.clear") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Recharger la page pour afficher le panier vide
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        // Recharger quand même la page
+        window.location.reload();
+    });
+}
+</script>
+
 @endsection

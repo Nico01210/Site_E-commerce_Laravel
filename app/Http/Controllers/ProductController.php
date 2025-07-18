@@ -118,9 +118,94 @@ public function show($id)
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
+        // Filtre par catégorie
+        if ($request->has('category') && !empty($request->category)) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Filtre par gamme de prix
+        if ($request->has('price_range') && !empty($request->price_range)) {
+            switch ($request->price_range) {
+                case '0-20':
+                    $query->whereBetween('price', [0, 20]);
+                    break;
+                case '20-30':
+                    $query->whereBetween('price', [20, 30]);
+                    break;
+                case '30-50':
+                    $query->whereBetween('price', [30, 50]);
+                    break;
+                case '50+':
+                    $query->where('price', '>', 50);
+                    break;
+            }
+        }
+
+        // Filtre par état
+        if ($request->has('etat') && !empty($request->etat)) {
+            $query->where('etat', $request->etat);
+        }
+
+        // Filtre par âge (si vous avez un champ age_min dans votre table)
+        if ($request->has('age_range') && !empty($request->age_range)) {
+            switch ($request->age_range) {
+                case '3-6':
+                    $query->whereBetween('age_min', [3, 6]);
+                    break;
+                case '6-10':
+                    $query->whereBetween('age_min', [6, 10]);
+                    break;
+                case '10-14':
+                    $query->whereBetween('age_min', [10, 14]);
+                    break;
+                case '14+':
+                    $query->where('age_min', '>=', 14);
+                    break;
+            }
+        }
+
+        // Tri des résultats
+        if ($request->has('sort') && !empty($request->sort)) {
+            switch ($request->sort) {
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'etat_best':
+                    $query->orderByRaw("CASE 
+                        WHEN etat = 'tres_bon' THEN 1 
+                        WHEN etat = 'bon' THEN 2 
+                        WHEN etat = 'correct' THEN 3 
+                        ELSE 4 END");
+                    break;
+                case 'etat_worst':
+                    $query->orderByRaw("CASE 
+                        WHEN etat = 'correct' THEN 1 
+                        WHEN etat = 'bon' THEN 2 
+                        WHEN etat = 'tres_bon' THEN 3 
+                        ELSE 4 END");
+                    break;
+                default:
+                    $query->orderBy('created_at', 'desc');
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // Récupérer toutes les catégories pour le filtre
+        $categories = Category::all();
+
         // Récupérer tous les produits avec pagination
         $products = $query->paginate(12);
 
-        return view('acheter', compact('products'));
+        return view('acheter', compact('products', 'categories'));
     }
 }

@@ -12,6 +12,8 @@ zéro tracas pour les vendeurs.
      </div>
     </div>
     <h1>Nos meilleures ventes</h1>
+    <br>
+    <br>
     <div class="image-row">
         @if($featuredProducts->count() >= 4)
             @foreach($featuredProducts as $product)
@@ -75,6 +77,7 @@ zéro tracas pour les vendeurs.
         @endif
         <br>
     </div>
+    <br>
 <button onclick="window.location.href='{{ url('/acheter') }}'"><strong>Voir tous les jeux</strong></button>
 
 <br>

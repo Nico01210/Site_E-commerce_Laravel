@@ -27,9 +27,9 @@
             <label for="etat">État du jeu *</label>
             <select id="etat" name="etat" required>
                 <option value="">Sélectionnez l'état</option>
-                <option value="TRES BON">TRÈS BON - Excellent état, presque comme neuf</option>
-                <option value="BON">BON - Quelques marques d'usures, aucune pièce manquante</option>
-                <option value="CORRECT">CORRECT - Marques d'usures, manque de quelques pièces</option>
+                <option value="tres_bon">TRÈS BON - Excellent état, presque comme neuf</option>
+                <option value="bon">BON - Quelques marques d'usures, aucune pièce manquante</option>
+                <option value="correct">CORRECT - Marques d'usures, manque de quelques pièces</option>
             </select>
         </div>
 
