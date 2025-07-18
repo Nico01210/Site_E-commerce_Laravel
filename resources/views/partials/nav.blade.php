@@ -19,6 +19,14 @@
         </li>
         @auth
         <li>
+            <a href="{{ route('cart.show') }}" class="{{ request()->is('panier') ? 'active' : '' }}">
+                <i class="fas fa-shopping-cart"></i> Panier 
+                <span class="{{ ($cartItemsCount ?? 0) > 0 ? 'cart-count' : 'cart-count-zero' }}">
+                    ({{ $cartItemsCount ?? 0 }})
+                </span>
+            </a>
+        </li>
+        <li>
             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
                 <button type="submit" class="nav-logout-btn">Déconnexion</button>

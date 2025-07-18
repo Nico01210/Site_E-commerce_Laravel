@@ -52,6 +52,16 @@ class User extends Authenticatable
 {
     return $this->hasOne(Cart::class);
 }
+
+public function getCartItemsCount()
+{
+    if (!$this->cart) {
+        return 0;
+    }
+    
+    return $this->cart->products()->sum('cart_product.quantity');
+}
+
 public function addresses()
 {
     return $this->hasMany(Address::class);

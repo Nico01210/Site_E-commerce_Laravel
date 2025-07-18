@@ -23,7 +23,7 @@
 
 <div class="galerie photos">
     @forelse($products as $product)
-        <div class="photo-item">
+    <a href="{{ route('produits.show', $product->id) }}" class="photo-item">
             @if($product->image)
                 <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="photo">
             @else
@@ -42,7 +42,7 @@
             @if($product->category)
                 <p class="category">Catégorie : {{ $product->category->name }}</p>
             @endif
-        </div>
+        </a>
     @empty
         <div class="no-products">
             <p>Aucun produit trouvé.</p>

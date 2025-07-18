@@ -2,17 +2,22 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Backoffice\ProductController as BackofficeProductController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [ProductController::class, 'home'])->name('home');
 
 // Routes pour les pages du site
 Route::get('/acheter', [ProductController::class, 'acheter'])->name('acheter');
+Route::get('/produit/{id}', [ProductController::class, 'show'])->name('produits.show');
+
+// Routes du panier
+Route::post('/panier/ajouter/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/panier', [CartController::class, 'showCart'])->name('cart.show')->middleware('auth');
+Route::delete('/panier/supprimer/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove')->middleware('auth');
 
 Route::get('/vendre', function () {
     return view('vendre');

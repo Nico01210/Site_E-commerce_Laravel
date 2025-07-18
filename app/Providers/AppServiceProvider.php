@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\MaintenanceMode;
 use Illuminate\Foundation\MaintenanceModeManager;
+use Illuminate\Support\Facades\View;
+use App\View\Composers\CartComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Enregistrer le View Composer pour la navbar
+        View::composer('partials.nav', CartComposer::class);
     }
 }

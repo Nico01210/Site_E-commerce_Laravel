@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Lien Produit</title>
+</head>
+<body>
+    <h1>Test du lien produit</h1>
+    <p><a href="/produit/4" target="_blank">Cliquer ici pour tester le produit ID 4</a></p>
+    <p><a href="/produit/1" target="_blank">Cliquer ici pour tester le produit ID 1</a></p>
+    
+    <script>
+        // Test AJAX pour voir ce qui est retourné
+        fetch('/produit/4')
+            .then(response => response.text())
+            .then(data => {
+                console.log('Response:', data.substring(0, 200));
+                if (data.startsWith('{"id":')) {
+                    console.log('PROBLÈME: Retourne du JSON');
+                } else if (data.includes('<!DOCTYPE html')) {
+                    console.log('OK: Retourne du HTML');
+                } else {
+                    console.log('INCONNU: Format non reconnu');
+                }
+            });
+    </script>
+</body>
+</html>

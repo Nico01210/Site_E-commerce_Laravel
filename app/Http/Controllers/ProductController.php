@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    // Afficher la page d'accueil avec les produits populaires
+    public function home()
+    {
+        // Récupérer 4 produits pour la page d'accueil (les plus récents par exemple)
+        $featuredProducts = Product::with('category')
+            ->orderBy('created_at', 'desc')
+            ->take(4)
+            ->get();
+
+        return view('home', compact('featuredProducts'));
+    }
+
     // Afficher la liste des produits
     public function index()
     {
@@ -15,12 +27,16 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+
+
     // Afficher le formulaire de création d’un produit
     public function create()
     {
         $categories = Category::all();
         return view('products.create', compact('categories'));
     }
+
+
 
     // Enregistrer un nouveau produit
     public function store(Request $request)
@@ -36,17 +52,19 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produit ajouté');
     }
 
-    // Afficher un produit spécifique (facultatif)
+
+
+    // Afficher un produit spécifique (fiche produit publique)
 public function show($id)
 {
-    $produit = Product::with('categorie')->find($id);
-
-    if (!$produit) {
-        return response()->json(['message' => 'Produit non trouvé'], 404);
-    }
-
-    return response()->json($produit);
+    $product = Product::with('category')->findOrFail($id);
+    
+    // Forcer le retour de la vue HTML même si la requête demande du JSON
+    return response()->view('product-detail', compact('product'))
+        ->header('Content-Type', 'text/html; charset=UTF-8');
 }
+
+
 
     // Afficher le formulaire d’édition
     public function edit(string $id)
@@ -55,6 +73,9 @@ public function show($id)
         $categories = Category::all();
         return view('products.edit', compact('product', 'categories'));
     }
+
+
+
 
     // Mettre à jour un produit existant
     public function update(Request $request, string $id)
@@ -72,6 +93,9 @@ public function show($id)
         return redirect()->route('products.index')->with('success', 'Produit mis à jour');
     }
 
+
+
+
     // Supprimer un produit
     public function destroy(string $id)
     {
@@ -80,6 +104,9 @@ public function show($id)
 
         return redirect()->route('products.index')->with('success', 'Produit supprimé');
     }
+
+
+
 
     // Afficher les produits pour la page acheter (publique)
     public function acheter(Request $request)
