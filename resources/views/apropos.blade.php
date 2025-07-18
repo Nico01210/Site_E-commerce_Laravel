@@ -42,7 +42,7 @@
                     <li>👉 on économise,</li>
                     <li>👉 et on préserve.</li>
                 </ul>
-                <a href="{{ route('formulaire-vente') }}" class="btn btn-primary">Estimer votre jeu</a>
+                <a href="{{ route('formulaire-vente') }}" class="btn btn-primary">Evaluer votre jeu</a>
             </div>
         </div>
     </div>
