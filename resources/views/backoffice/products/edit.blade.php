@@ -80,8 +80,6 @@
                         <div class="error-message">{{ $message }}</div>
                     @enderror
                 </div>
-                    @enderror
-                </div>
 
                 <div class="form-actions">
                     <button type="submit">Mettre à jour le produit</button>
