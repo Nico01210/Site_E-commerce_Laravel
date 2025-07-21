@@ -8,7 +8,8 @@ body {
 html, body {
   margin: 0;
   padding: 0;
-    display: flex;
+ overflow-x: hidden;
+ display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
@@ -278,8 +279,8 @@ img {
     pointer-events: none; /* le texte ne bloque pas les clics sur l'image */
 }
 img.full-width {
-    width: 100vw;       /* largeur de la fenêtre */
-    max-width: 100vw;   /* pas de dépassement */
+    width: 100%;       /* largeur de la fenêtre */
+    max-width: 100%;   /* pas de dépassement */
     display: block;
     margin: 0;
     padding: 0;
