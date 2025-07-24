@@ -134,12 +134,11 @@ h2  {
         /* NAVBAR - FORCER LA RÉDUCTION DE HAUTEUR */
 nav {
     background-color: #8B0000;
-    padding: 10px !important; /* Augmenté : 8px -> 10px */
-    display: flex; 
-    justify-content: center; /* centre le contenu */
+    padding: 10px !important; 
+    justify-content: center; 
     align-items: center;
-    min-height: 60px; /* Augmenté : 50px -> 60px */
-    height: auto !important; /* hauteur automatique */
+    min-height: 60px; 
+    height: auto !important; 
     position: relative;
 }
 
