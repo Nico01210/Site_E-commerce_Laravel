@@ -38,7 +38,8 @@ Route::get('/apropos', function () {
 });
 
 Route::get('/moncompte', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/moncompte', [LoginController::class, 'login']);
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('moncompte');
+Route::post('/moncompte', [LoginController::class, 'login'])->name('moncompte.login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/inscription', [RegisterController::class, 'showRegistrationForm'])->name('inscription');

@@ -42,7 +42,7 @@
 </button>
 <p class="inscription">
   Vous avez déjà un compte ? 
-  <a href="{{ route('moncompte') }}" style="text-decoration: underline;">Connectez-vous</a>
+  <a href="{{ url('/moncompte') }}" style="text-decoration: underline;">Connectez-vous</a>
 </p>
 
 
