@@ -72,8 +72,11 @@
 @if(auth()->user()->isAdmin())
 <div class="dashboard-card">
     <h2>Accès Administrateur</h2>
-    <p>Vous avez les droits d'administrateur. Vous pouvez accéder au backoffice pour gérer les produits.</p>
-    <a href="{{ url('/backoffice/produits') }}" class="btn btn-primary">Accéder au Backoffice</a>
+    <p>Vous avez les droits d'administrateur. Vous pouvez accéder au tableau de bord admin et au backoffice.</p>
+    <div class="admin-buttons">
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-success">Tableau de bord Admin</a>
+        <a href="{{ url('/backoffice/produits') }}" class="btn btn-primary">Gestion des Produits</a>
+    </div>
 </div>
 @endif
 
@@ -82,5 +85,30 @@
     <p>Historique de vos achats et commandes.</p>
     <p><em>Fonctionnalité à venir...</em></p>
 </div>
+
+<style>
+.admin-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 768px) {
+    .admin-buttons {
+        flex-direction: column;
+    }
+}
+</style>
 
 @endsection

@@ -59,6 +59,14 @@ class User extends Authenticatable
     }
     
     /**
+     * Accesseur pour is_admin (permet d'utiliser $user->is_admin)
+     */
+    public function getIsAdminAttribute()
+    {
+        return $this->role === 'admin';
+    }
+    
+    /**
      * Vérifier si l'utilisateur est un utilisateur normal
      */
     public function isUser()

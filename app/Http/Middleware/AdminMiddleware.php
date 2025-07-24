@@ -16,12 +16,8 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Vous devez être connecté pour accéder à cette page.');
-        }
-
-        if (!Auth::user()->isAdmin()) {
-            return redirect()->route('home')->with('error', 'Accès refusé. Droits administrateur requis.');
+        if (!Auth::check() || !Auth::user()->is_admin) {
+            abort(403, 'Access denied');
         }
 
         return $next($request);
