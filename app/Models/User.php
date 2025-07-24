@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -48,6 +49,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    /**
+     * Vérifier si l'utilisateur est admin
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    
+    /**
+     * Vérifier si l'utilisateur est un utilisateur normal
+     */
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+    
     public function cart()
 {
     return $this->hasOne(Cart::class);

@@ -48,14 +48,14 @@ Route::post('/inscription', [RegisterController::class, 'register'])->name('regi
 // Route pour accéder au backoffice
 Route::get('/admin', function () {
     return redirect('/backoffice/produits');
-})->middleware('auth');
+})->middleware(['auth', 'admin']);
 
 // Routes du backoffice
 Route::get('/backoffice', function () {
     return redirect('/backoffice/produits');
-})->middleware('auth');
+})->middleware(['auth', 'admin']);
 
-Route::prefix('backoffice')->name('backoffice.')->middleware('auth')->group(function () {
+Route::prefix('backoffice')->name('backoffice.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('produits', BackofficeProductController::class);
 });
 
@@ -66,6 +66,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profil/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::delete('/profil', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

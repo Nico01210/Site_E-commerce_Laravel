@@ -37,6 +37,11 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('profile.edit') }}" class="{{ request()->is('profil') ? 'active' : '' }}">
+                <i class="fas fa-user"></i> Mon profil
+            </a>
+        </li>
+        <li>
             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
                 <button type="submit" class="nav-logout-btn">Déconnexion</button>
@@ -69,6 +74,11 @@
                 <a href="{{ route('cart.show') }}" onclick="closeMobileMenu()">
                     <i class="fas fa-shopping-cart"></i> Panier 
                     <span class="cart-count">{{ $cartItemsCount ?? 0 }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('profile.edit') }}" onclick="closeMobileMenu()">
+                    <i class="fas fa-user"></i> Mon profil
                 </a>
             </li>
             <li>
