@@ -30,7 +30,7 @@ public function store(Request $request)
         'price' => 'required|numeric',
         'description' => 'nullable|string',
         'stock' => 'nullable|integer',
-        'etat' => 'required|in:BON,CORRECT,TRES BON',
+        'etat' => 'required|in:tres_bon,bon,correct',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
@@ -39,10 +39,10 @@ public function store(Request $request)
         ['name' => 'Général'],
         [
             'name' => 'Général', 
-            'description' => 'Catégorie par défaut', 
+            'description' => 'Catégorie par défaut',
             'price' => 0,
             'stock' => 0,
-            'etat' => 'BON'
+            'etat' => 'bon'
         ]
     );
 
@@ -95,7 +95,7 @@ public function update(Request $request, $id)
         'price' => 'required|numeric',
         'description' => 'nullable|string',
         'stock' => 'nullable|integer',
-        'etat' => 'required|in:BON,CORRECT,TRES BON',
+        'etat' => 'required|in:tres_bon,bon,correct',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
