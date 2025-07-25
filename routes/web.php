@@ -8,6 +8,7 @@ use App\Http\Controllers\Backoffice\ProductController as BackofficeProductContro
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [ProductController::class, 'home'])->name('home');
 
@@ -75,5 +76,51 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 });
+
+// Route de test pour debug
+Route::get('/debug-user', function () {
+    $debug = [
+        'auth_check' => Auth::check(),
+        'session_user' => session('user'),
+        'session_all' => session()->all()
+    ];
+    
+    if (Auth::check()) {
+        $user = Auth::user();
+        $debug['user_data'] = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
+            'isAdmin_method' => $user->isAdmin(),
+            'is_admin_property' => $user->is_admin
+        ];
+    }
+    
+    return response()->json($debug);
+});
+
+Route::get('/test-auth', function () {
+    if (!Auth::check()) {
+        return response()->json(['status' => 'Non connecté']);
+    }
+    
+    $user = Auth::user();
+    return response()->json([
+        'status' => 'Connecté',
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'role' => $user->role,
+        'isAdmin_method' => $user->isAdmin(),
+        'is_admin_property' => $user->is_admin,
+        'middleware_test' => 'OK'
+    ]);
+})->middleware('auth');
+
+// Route de test pour middleware admin
+Route::get('/test-admin', function () {
+    return response()->json(['status' => 'Accès admin autorisé', 'user' => Auth::user()->name]);
+})->middleware(['auth', 'is_admin']);
 
 require __DIR__.'/auth.php';
