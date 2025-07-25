@@ -51,24 +51,22 @@ public function store(Request $request)
     $imagePath = null;
     if ($request->hasFile('image')) {
         try {
-            // Créer le dossier s'il n'existe pas
-            $uploadDir = public_path('images/products');
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
-            }
-            
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             
-            // Vérifier que le dossier est accessible en écriture
-            if (!is_writable($uploadDir)) {
-                chmod($uploadDir, 0755);
+            // Utiliser le dossier public/images/products
+            $destinationPath = public_path('images/products');
+            
+            // S'assurer que le dossier existe
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
             }
             
-            $image->move($uploadDir, $imageName);
+            // Déplacer l'image
+            $image->move($destinationPath, $imageName);
             $imagePath = 'images/products/' . $imageName;
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['image' => 'Erreur lors de l\'upload de l\'image: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['image' => 'Erreur lors de l\'upload de l\'image: ' . $e->getMessage()])->withInput();
         }
     }
 
@@ -118,26 +116,29 @@ public function update(Request $request, $id)
 
     // Gérer l'upload de la nouvelle image
     if ($request->hasFile('image')) {
-        // Supprimer l'ancienne image si elle existe
-        if ($product->image && file_exists(public_path($product->image))) {
-            unlink(public_path($product->image));
+        try {
+            // Supprimer l'ancienne image si elle existe
+            if ($product->image && file_exists(public_path($product->image))) {
+                unlink(public_path($product->image));
+            }
+            
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            
+            // Utiliser le dossier public/images/products
+            $destinationPath = public_path('images/products');
+            
+            // S'assurer que le dossier existe
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            
+            // Déplacer l'image
+            $image->move($destinationPath, $imageName);
+            $validated['image'] = 'images/products/' . $imageName;
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['image' => 'Erreur lors de l\'upload de l\'image: ' . $e->getMessage()])->withInput();
         }
-        
-        // Créer le dossier s'il n'existe pas
-        $uploadDir = public_path('images/products');
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
-        
-        // Vérifier que le dossier est accessible en écriture
-        if (!is_writable($uploadDir)) {
-            chmod($uploadDir, 0755);
-        }
-        
-        $image = $request->file('image');
-        $imageName = time() . '_' . $image->getClientOriginalName();
-        $image->move($uploadDir, $imageName);
-        $validated['image'] = 'images/products/' . $imageName;
     }
 
     $product->update($validated);
