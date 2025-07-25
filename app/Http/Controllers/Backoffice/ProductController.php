@@ -57,15 +57,41 @@ public function store(Request $request)
             // Utiliser le dossier public/images/products
             $destinationPath = public_path('images/products');
             
-            // S'assurer que le dossier existe
+            // Debug: Afficher les informations de chemin et permissions
+            \Log::info('Upload attempt', [
+                'destination' => $destinationPath,
+                'exists' => file_exists($destinationPath),
+                'writable' => is_writable($destinationPath),
+                'base_path' => base_path(),
+                'public_path' => public_path()
+            ]);
+            
+            // S'assurer que le dossier existe avec les bonnes permissions
             if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
+                if (!mkdir($destinationPath, 0755, true)) {
+                    throw new \Exception("Impossible de créer le dossier: " . $destinationPath);
+                }
+                // Essayer de définir les permissions après création
+                @chmod($destinationPath, 0755);
+            }
+            
+            // Vérifier les permissions avant l'upload
+            if (!is_writable($destinationPath)) {
+                // Essayer de corriger les permissions
+                @chmod($destinationPath, 0755);
+                if (!is_writable($destinationPath)) {
+                    throw new \Exception("Le dossier n'est pas accessible en écriture: " . $destinationPath);
+                }
             }
             
             // Déplacer l'image
             $image->move($destinationPath, $imageName);
             $imagePath = 'images/products/' . $imageName;
+            
+            \Log::info('Upload successful', ['path' => $imagePath]);
+            
         } catch (\Exception $e) {
+            \Log::error('Upload failed', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors(['image' => 'Erreur lors de l\'upload de l\'image: ' . $e->getMessage()])->withInput();
         }
     }
@@ -128,15 +154,28 @@ public function update(Request $request, $id)
             // Utiliser le dossier public/images/products
             $destinationPath = public_path('images/products');
             
-            // S'assurer que le dossier existe
+            // S'assurer que le dossier existe avec les bonnes permissions
             if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
+                if (!mkdir($destinationPath, 0755, true)) {
+                    throw new \Exception("Impossible de créer le dossier: " . $destinationPath);
+                }
+                @chmod($destinationPath, 0755);
+            }
+            
+            // Vérifier les permissions avant l'upload
+            if (!is_writable($destinationPath)) {
+                @chmod($destinationPath, 0755);
+                if (!is_writable($destinationPath)) {
+                    throw new \Exception("Le dossier n'est pas accessible en écriture: " . $destinationPath);
+                }
             }
             
             // Déplacer l'image
             $image->move($destinationPath, $imageName);
             $validated['image'] = 'images/products/' . $imageName;
+            
         } catch (\Exception $e) {
+            \Log::error('Upload failed in update', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors(['image' => 'Erreur lors de l\'upload de l\'image: ' . $e->getMessage()])->withInput();
         }
     }

@@ -79,4 +79,34 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
+// Route de diagnostic pour les permissions (à supprimer en production)
+Route::get('/diagnostic-permissions', function () {
+    $publicPath = public_path();
+    $imagesPath = public_path('images');
+    $productsPath = public_path('images/products');
+    
+    $info = [
+        'base_path' => base_path(),
+        'public_path' => $publicPath,
+        'images_path' => $imagesPath,
+        'products_path' => $productsPath,
+        'public_exists' => file_exists($publicPath),
+        'public_writable' => is_writable($publicPath),
+        'images_exists' => file_exists($imagesPath),
+        'images_writable' => is_writable($imagesPath),
+        'products_exists' => file_exists($productsPath),
+        'products_writable' => is_writable($productsPath),
+        'php_user' => get_current_user(),
+        'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown',
+        'document_root' => $_SERVER['DOCUMENT_ROOT'] ?? 'Unknown'
+    ];
+    
+    if (file_exists($productsPath)) {
+        $info['products_permissions'] = substr(sprintf('%o', fileperms($productsPath)), -4);
+        $info['products_owner'] = fileowner($productsPath);
+    }
+    
+    return response()->json($info, 200, [], JSON_PRETTY_PRINT);
+});
+
 require __DIR__.'/auth.php';
