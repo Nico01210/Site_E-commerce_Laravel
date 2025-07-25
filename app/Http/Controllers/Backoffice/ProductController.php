@@ -68,19 +68,49 @@ public function store(Request $request)
             
             // S'assurer que le dossier existe avec les bonnes permissions
             if (!file_exists($destinationPath)) {
+                \Log::info('Création du dossier: ' . $destinationPath);
                 if (!mkdir($destinationPath, 0755, true)) {
                     throw new \Exception("Impossible de créer le dossier: " . $destinationPath);
                 }
+                \Log::info('Dossier créé avec succès');
+                
                 // Essayer de définir les permissions après création
-                @chmod($destinationPath, 0755);
+                try {
+                    if (chmod($destinationPath, 0755)) {
+                        \Log::info('Permissions 755 définies avec succès');
+                    } else {
+                        \Log::warning('Échec de chmod 755, tentative avec 777');
+                        chmod($destinationPath, 0777);
+                    }
+                } catch (\Exception $e) {
+                    \Log::warning('Erreur chmod: ' . $e->getMessage());
+                }
             }
             
             // Vérifier les permissions avant l'upload
             if (!is_writable($destinationPath)) {
-                // Essayer de corriger les permissions
-                @chmod($destinationPath, 0755);
+                \Log::warning('Dossier non accessible en écriture, tentative de correction');
+                
+                // Essayer de corriger les permissions avec différentes valeurs
+                try {
+                    if (chmod($destinationPath, 0755)) {
+                        \Log::info('Correction permissions 755 réussie');
+                    } elseif (chmod($destinationPath, 0775)) {
+                        \Log::info('Correction permissions 775 réussie');
+                    } elseif (chmod($destinationPath, 0777)) {
+                        \Log::info('Correction permissions 777 réussie');
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Échec correction permissions: ' . $e->getMessage());
+                }
+                
+                // Vérifier à nouveau
                 if (!is_writable($destinationPath)) {
-                    throw new \Exception("Le dossier n'est pas accessible en écriture: " . $destinationPath);
+                    \Log::error('Dossier toujours non accessible après correction');
+                    \Log::info('Permissions actuelles: ' . substr(sprintf('%o', fileperms($destinationPath)), -4));
+                    \Log::info('Propriétaire: ' . fileowner($destinationPath));
+                    \Log::info('Utilisateur PHP: ' . get_current_user());
+                    throw new \Exception("Le dossier n'est pas accessible en écriture: " . $destinationPath . " (permissions: " . substr(sprintf('%o', fileperms($destinationPath)), -4) . ")");
                 }
             }
             
@@ -156,17 +186,49 @@ public function update(Request $request, $id)
             
             // S'assurer que le dossier existe avec les bonnes permissions
             if (!file_exists($destinationPath)) {
+                \Log::info('Création du dossier pour update: ' . $destinationPath);
                 if (!mkdir($destinationPath, 0755, true)) {
                     throw new \Exception("Impossible de créer le dossier: " . $destinationPath);
                 }
-                @chmod($destinationPath, 0755);
+                \Log::info('Dossier créé avec succès pour update');
+                
+                // Essayer de définir les permissions après création
+                try {
+                    if (chmod($destinationPath, 0755)) {
+                        \Log::info('Permissions 755 définies avec succès pour update');
+                    } else {
+                        \Log::warning('Échec de chmod 755 pour update, tentative avec 777');
+                        chmod($destinationPath, 0777);
+                    }
+                } catch (\Exception $e) {
+                    \Log::warning('Erreur chmod pour update: ' . $e->getMessage());
+                }
             }
             
             // Vérifier les permissions avant l'upload
             if (!is_writable($destinationPath)) {
-                @chmod($destinationPath, 0755);
+                \Log::warning('Dossier non accessible en écriture pour update, tentative de correction');
+                
+                // Essayer de corriger les permissions avec différentes valeurs
+                try {
+                    if (chmod($destinationPath, 0755)) {
+                        \Log::info('Correction permissions 755 réussie pour update');
+                    } elseif (chmod($destinationPath, 0775)) {
+                        \Log::info('Correction permissions 775 réussie pour update');
+                    } elseif (chmod($destinationPath, 0777)) {
+                        \Log::info('Correction permissions 777 réussie pour update');
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Échec correction permissions pour update: ' . $e->getMessage());
+                }
+                
+                // Vérifier à nouveau
                 if (!is_writable($destinationPath)) {
-                    throw new \Exception("Le dossier n'est pas accessible en écriture: " . $destinationPath);
+                    \Log::error('Dossier toujours non accessible après correction pour update');
+                    \Log::info('Permissions actuelles: ' . substr(sprintf('%o', fileperms($destinationPath)), -4));
+                    \Log::info('Propriétaire: ' . fileowner($destinationPath));
+                    \Log::info('Utilisateur PHP: ' . get_current_user());
+                    throw new \Exception("Le dossier n'est pas accessible en écriture: " . $destinationPath . " (permissions: " . substr(sprintf('%o', fileperms($destinationPath)), -4) . ")");
                 }
             }
             
