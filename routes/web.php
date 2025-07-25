@@ -47,7 +47,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::get('/inscription', [RegisterController::class, 'showRegistrationForm'])->name('inscription');
-Route::post('/inscription', [RegisterController::class, 'register'])->name('register');
+Route::post('/inscription', [RegisterController::class, 'register'])->name('inscription.submit');
 
 // Route pour accéder au backoffice
 Route::get('/admin', function () {
