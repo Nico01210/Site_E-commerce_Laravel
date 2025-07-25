@@ -39,10 +39,12 @@ Route::get('/apropos', function () {
     return view('apropos');
 });
 
-Route::get('/moncompte', [LoginController::class, 'showLoginForm'])->name('login');
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('moncompte');
-Route::post('/moncompte', [LoginController::class, 'login'])->name('moncompte.login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login'); // nom classique pour se connecter
+Route::get('/moncompte', [LoginController::class, 'showLoginForm'])->name('moncompte'); // si tu veux un alias
+
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 Route::get('/inscription', [RegisterController::class, 'showRegistrationForm'])->name('inscription');
 Route::post('/inscription', [RegisterController::class, 'register'])->name('register');
