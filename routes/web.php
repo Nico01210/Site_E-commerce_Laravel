@@ -49,17 +49,17 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/inscription', [RegisterController::class, 'showRegistrationForm'])->name('inscription');
 Route::post('/inscription', [RegisterController::class, 'register'])->name('inscription.submit');
 
-// Route pour accéder au backoffice
+// Route pour accéder au backoffice (accessible à tous)
 Route::get('/admin', function () {
     return redirect('/backoffice/produits');
-})->middleware(['auth', 'admin']);
+});
 
-// Routes du backoffice
+// Routes du backoffice (accessible à tous)
 Route::get('/backoffice', function () {
     return redirect('/backoffice/produits');
-})->middleware(['auth', 'admin']);
+});
 
-Route::prefix('backoffice')->name('backoffice.')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('backoffice')->name('backoffice.')->group(function () {
     Route::resource('produits', BackofficeProductController::class);
 });
 
