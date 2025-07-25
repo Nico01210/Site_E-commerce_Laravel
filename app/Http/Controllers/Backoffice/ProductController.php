@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backoffice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductController extends Controller
@@ -49,10 +50,26 @@ public function store(Request $request)
     // Gérer l'upload de l'image
     $imagePath = null;
     if ($request->hasFile('image')) {
-        $image = $request->file('image');
-        $imageName = time() . '_' . $image->getClientOriginalName();
-        $image->move(public_path('images/products'), $imageName);
-        $imagePath = 'images/products/' . $imageName;
+        try {
+            // Créer le dossier s'il n'existe pas
+            $uploadDir = public_path('images/products');
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+            
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            
+            // Vérifier que le dossier est accessible en écriture
+            if (!is_writable($uploadDir)) {
+                chmod($uploadDir, 0755);
+            }
+            
+            $image->move($uploadDir, $imageName);
+            $imagePath = 'images/products/' . $imageName;
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['image' => 'Erreur lors de l\'upload de l\'image: ' . $e->getMessage()]);
+        }
     }
 
     // Valeur par défaut pour stock si non fourni
@@ -106,9 +123,20 @@ public function update(Request $request, $id)
             unlink(public_path($product->image));
         }
         
+        // Créer le dossier s'il n'existe pas
+        $uploadDir = public_path('images/products');
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+        
+        // Vérifier que le dossier est accessible en écriture
+        if (!is_writable($uploadDir)) {
+            chmod($uploadDir, 0755);
+        }
+        
         $image = $request->file('image');
         $imageName = time() . '_' . $image->getClientOriginalName();
-        $image->move(public_path('images/products'), $imageName);
+        $image->move($uploadDir, $imageName);
         $validated['image'] = 'images/products/' . $imageName;
     }
 
