@@ -969,6 +969,15 @@ h1 {
     border: 1px solid #f5c6cb;
 }
 
+/* Messages d'erreur pour les champs spécifiques */
+.error-message {
+    display: block;
+    color: #721c24;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
 /* Pagination */
 .pagination {
     display: flex;
