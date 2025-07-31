@@ -16,8 +16,17 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || !Auth::user()->is_admin) {
-            abort(403, 'Access denied');
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Vous devez être connecté pour accéder à cette page.');
+        }
+        
+        if (!Auth::user()->is_admin) {
+            // Si c'est une requête AJAX, retourner une erreur JSON
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Accès refusé'], 403);
+            }
+            // Sinon, afficher la page d'erreur 403
+            abort(403);
         }
 
         return $next($request);

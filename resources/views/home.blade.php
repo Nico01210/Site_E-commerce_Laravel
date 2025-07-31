@@ -59,15 +59,15 @@ zéro tracas pour les vendeurs.
                         <p>Complet</p>
                     </div>
                 </a>
-                <a href="{{ route('acheter') }}" class="featured-product-link static-image">
-                    <img src="{{ asset('images/Imagecollée3.png') }}" alt="Meilleurs prix" class="featured-product-image">
+                <a href="{{ route('acheter') }}" class="featured-product-link static-image image-3">
+                    <img src="{{ asset('images/Imagecollée3.png') }}" alt="Meilleurs prix" class="featured-product-image img-colle-3">
                     <div class="product-overlay">
                         <h3>Meilleurs</h3>
                         <p>Prix</p>
                     </div>
                 </a>
-                <a href="{{ route('acheter') }}" class="featured-product-link static-image">
-                    <img src="{{ asset('images/Imagecollée4.png') }}" alt="Qualité garantie" class="featured-product-image">
+                <a href="{{ route('acheter') }}" class="featured-product-link static-image image-4">
+                    <img src="{{ asset('images/Imagecollée4.png') }}" alt="Qualité garantie" class="featured-product-image img-colle-4">
                     <div class="product-overlay">
                         <h3>Qualité</h3>
                         <p>Garantie</p>

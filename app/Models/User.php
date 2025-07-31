@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'is_admin',
     ];
 
     /**
@@ -47,6 +48,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
         ];
     }
     
@@ -55,15 +57,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        return $this->role === 'admin';
-    }
-    
-    /**
-     * Accesseur pour is_admin (permet d'utiliser $user->is_admin)
-     */
-    public function getIsAdminAttribute()
-    {
-        return $this->role === 'admin';
+        return $this->is_admin;
     }
     
     /**

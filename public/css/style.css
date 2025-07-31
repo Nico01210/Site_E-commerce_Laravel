@@ -122,12 +122,70 @@ h2  {
     .image-row {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
+        padding: 10px;
     }
     
     .featured-product-link {
-        width: 80%;
-        max-width: 250px;
-        height: 200px;
+        width: 85%;
+        max-width: 280px;
+        height: 180px;
+        margin: 0 auto;
+    }
+    
+    /* OVERRIDE COMPLET pour les images 3 et 4 sur mobile */
+    .image-3,
+    .image-4 {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background-color: #ffffff !important;
+        border: 2px solid #e9ecef !important;
+        padding: 10px !important;
+    }
+    
+    .image-3 img,
+    .image-4 img {
+        width: auto !important;
+        height: auto !important;
+        max-width: 90% !important;
+        max-height: 90% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        display: block !important;
+        margin: auto !important;
+        border-radius: 5px !important;
+    }
+    
+    /* Amélioration des overlays sur mobile pour ces images */
+    .image-3 .product-overlay,
+    .image-4 .product-overlay {
+        background: linear-gradient(to top, rgba(139, 0, 0, 0.9), transparent);
+        padding: 12px;
+    }
+}
+
+/* Media query pour tablettes (769px à 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .image-row {
+        gap: 15px;
+        justify-content: center;
+    }
+    
+    .featured-product-link {
+        width: 220px;
+        height: 180px;
+    }
+    
+    /* Optimisation pour Imagecollée3 et Imagecollée4 sur tablette */
+    .image-3 .featured-product-image,
+    .image-4 .featured-product-image {
+        object-fit: contain !important;
+        object-position: center !important;
+        padding: 5px !important;
+        background-color: #f8f9fa !important;
+        border-radius: 6px !important;
+        box-sizing: border-box !important;
     }
 }
 
@@ -401,6 +459,24 @@ img {
     transition: transform 0.3s ease;
     border-radius: 0 !important; /* le border-radius est géré par le parent */
 }
+
+/* DÉSACTIVATION des règles générales pour les images 3 et 4 sur mobile */
+@media (max-width: 768px) {
+    .image-3 .featured-product-image,
+    .image-4 .featured-product-image {
+        all: unset !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: 90% !important;
+        max-height: 90% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        display: block !important;
+        margin: auto !important;
+        border-radius: 5px !important;
+        transition: none !important;
+    }
+}
 .image-icone {
     width: 100%;
     margin: 40px;
@@ -446,6 +522,19 @@ img.full-width {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
+    /* Amélioration de la qualité de rendu */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-filter: contrast(1.1) brightness(1.05);
+    filter: contrast(1.1) brightness(1.05);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
             /* BUTTONS */
@@ -1057,6 +1146,117 @@ h1 {
     padding: 20px;
 }
 
+/* Pagination compacte pour le backoffice */
+.backoffice .pagination {
+    margin: 20px 0 15px 0;
+    gap: 3px;
+}
+
+.backoffice .pagination li a,
+.backoffice .pagination li span {
+    min-width: 28px;
+    height: 28px;
+    padding: 4px 6px;
+    font-size: 12px;
+    border-radius: 3px;
+}
+
+.backoffice .pagination li:first-child a,
+.backoffice .pagination li:last-child a {
+    padding: 4px 8px;
+    font-size: 11px;
+}
+
+.backoffice .pagination li:first-child a:before {
+    font-size: 14px;
+    margin-right: 2px;
+}
+
+.backoffice .pagination li:last-child a:after {
+    font-size: 14px;
+    margin-left: 2px;
+}
+
+/* Pagination ultra-compacte */
+.compact-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.pagination-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: #8B0000;
+    color: white;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.pagination-btn:hover {
+    background-color: #400F10;
+    transform: translateY(-1px);
+}
+
+.pagination-btn-disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    background-color: #f8f9fa;
+    color: #495057;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid #dee2e6;
+}
+
+/* Pagination ultra-minimaliste (flèches seulement) */
+.minimal-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin: 10px 0;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: #8B0000;
+    color: white;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background-color: #400F10;
+    transform: scale(1.1);
+}
+
+.nav-btn-disabled {
+    background-color: #ddd;
+    color: #999;
+    cursor: not-allowed;
+}
+
 .backoffice-form {
     background: white;
     padding: 30px;
@@ -1220,6 +1420,87 @@ a.btn-cancel {
     display: flex;
     justify-content: center;
     margin: 30px 0;
+}
+
+/* Pagination sur la page acheter - style intégré */
+.pagination-wrapper .minimal-pagination,
+.pagination-wrapper .compact-pagination {
+    margin: 0; /* Reset margin car pagination-wrapper gère déjà */
+}
+
+.pagination-wrapper .nav-btn,
+.pagination-wrapper .pagination-btn {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pagination-wrapper .nav-btn:hover,
+.pagination-wrapper .pagination-btn:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Pagination spéciale pour la page acheter */
+.shop-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.shop-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: #8B0000;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.shop-nav-btn:hover {
+    background-color: #400F10;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.shop-nav-disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.shop-nav-disabled:hover {
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.shop-pagination-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.page-numbers {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    background-color: #f8f9fa;
+    padding: 4px 12px;
+    border-radius: 3px;
+    border: 1px solid #dee2e6;
+}
+
+.total-items {
+    font-size: 11px;
+    color: #666;
+    margin-top: 2px;
 }
 
 /* FICHE PRODUIT */

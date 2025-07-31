@@ -93,7 +93,7 @@
 
 @if($products->hasPages())
     <div class="pagination-wrapper">
-        {{ $products->appends(request()->query())->links() }}
+        @include('custom.shop-pagination', ['paginator' => $products->appends(request()->query())])
     </div>
 @endif
 

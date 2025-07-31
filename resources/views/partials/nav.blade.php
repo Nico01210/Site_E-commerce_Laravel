@@ -41,6 +41,13 @@
                 <i class="fas fa-user"></i> Mon profil
             </a>
         </li>
+        @if(auth()->user()->is_admin)
+        <li>
+            <a href="{{ url('/backoffice') }}" class="{{ request()->is('backoffice*') ? 'active' : '' }}">
+                <i class="fas fa-cogs"></i> Backoffice
+            </a>
+        </li>
+        @endif
         <li>
             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
@@ -81,6 +88,13 @@
                     <i class="fas fa-user"></i> Mon profil
                 </a>
             </li>
+            @if(auth()->user()->is_admin)
+            <li>
+                <a href="{{ url('/backoffice') }}" onclick="closeMobileMenu()">
+                    <i class="fas fa-cogs"></i> Backoffice
+                </a>
+            </li>
+            @endif
             <li>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf

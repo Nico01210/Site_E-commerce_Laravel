@@ -51,11 +51,9 @@
     </tbody>
 </table>
 
-{{-- Si tu utilises la pagination Laravel --}}
+{{-- Pagination compacte personnalisée --}}
 @if(method_exists($produits, 'links'))
-    <div>
-        {{ $produits->links() }}
-    </div>
+    @include('custom.compact-pagination', ['paginator' => $produits])
 @endif
 
 @endsection

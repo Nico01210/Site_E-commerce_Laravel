@@ -5,7 +5,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backoffice\ProductController as BackofficeProductController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -39,27 +38,25 @@ Route::get('/apropos', function () {
     return view('apropos');
 });
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login'); // nom classique pour se connecter
-Route::get('/moncompte', [LoginController::class, 'showLoginForm'])->name('moncompte'); // si tu veux un alias
-
-Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
+// Alias pour la connexion (redirige vers Breeze)
+Route::get('/moncompte', function () {
+    return redirect()->route('login');
+})->name('moncompte');
 
 Route::get('/inscription', [RegisterController::class, 'showRegistrationForm'])->name('inscription');
 Route::post('/inscription', [RegisterController::class, 'register'])->name('inscription.submit');
 
-// Route pour accéder au backoffice (accessible à tous)
-Route::get('/admin', function () {
+// Route pour accéder au backoffice (uniquement pour les admins)
+Route::middleware(['auth', 'is_admin'])->get('/admin', function () {
     return redirect('/backoffice/produits');
 });
 
-// Routes du backoffice (accessible à tous)
-Route::get('/backoffice', function () {
+// Routes du backoffice (uniquement pour les admins)
+Route::middleware(['auth', 'is_admin'])->get('/backoffice', function () {
     return redirect('/backoffice/produits');
 });
 
-Route::prefix('backoffice')->name('backoffice.')->group(function () {
+Route::middleware(['auth', 'is_admin'])->prefix('backoffice')->name('backoffice.')->group(function () {
     Route::resource('produits', BackofficeProductController::class);
 });
 
@@ -107,6 +104,24 @@ Route::get('/diagnostic-permissions', function () {
     }
     
     return response()->json($info, 200, [], JSON_PRETTY_PRINT);
+});
+
+// Route de test pour vérifier l'authentification (à supprimer en production)
+Route::get('/test-auth', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        return response()->json([
+            'authenticated' => true,
+            'user' => $user->only(['id', 'name', 'email', 'is_admin']),
+            'is_admin' => $user->is_admin,
+            'can_access_backoffice' => $user->is_admin
+        ]);
+    } else {
+        return response()->json([
+            'authenticated' => false,
+            'message' => 'Non connecté'
+        ]);
+    }
 });
 
 require __DIR__.'/auth.php';
