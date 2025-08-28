@@ -53,6 +53,7 @@ Le site sera accessible sur http://localhost:8000.
 
 ## 📸 Aperçu
 
+<img src="images/replay.png" alt="Aperçu de l'application" width="600">
 
 
 ## 🔮 Améliorations possibles
