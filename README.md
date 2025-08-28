@@ -52,7 +52,8 @@ php artisan serve
 Le site sera accessible sur http://localhost:8000.
 
 ## 📸 Aperçu
-(Ajoute ici une ou plusieurs captures d’écran du site une fois dispo)
+[(Ajoute ici une ou plusieurs captures d’écran du site une fois dispo)
+](https://www.linkedin.com/in/nicolas-perret01/)
 
 ## 🔮 Améliorations possibles
 
@@ -67,6 +68,6 @@ Ce projet est publié sous licence MIT.
 
 ## 👤 Auteur
 Développé par Perret Nicolas
-📎 LinkedIn(https://www.linkedin.com/in/nicolas-perret01/)
+📎 [LinkedIn](https://www.linkedin.com/in/nicolas-perret01/)
 
 
