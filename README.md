@@ -35,44 +35,38 @@ Projet réalisé dans le cadre d’une **formation en développement web**.
    ```bash
    git clone https://github.com/ton-pseudo/REPLAY.git
    cd REPLAY
-Installer les dépendances PHP
-
-bash
-Copier le code
+   
+2. Installer les dépendances PHP
 composer install
-Créer et configurer le fichier d’environnement
 
-bash
-Copier le code
+3. Créer et configurer le fichier d’environnement
 cp .env.example .env
 php artisan key:generate
-Configurer la base de données dans .env puis lancer les migrations :
 
-bash
-Copier le code
+4. Configurer la base de données dans .env puis lancer les migrations :
 php artisan migrate
-Démarrer le serveur
 
-bash
-Copier le code
+5. Démarrer le serveur
 php artisan serve
+
 Le site sera accessible sur http://localhost:8000.
 
-📸 Aperçu
+## 📸 Aperçu
 (Ajoute ici une ou plusieurs captures d’écran du site une fois dispo)
 
-🔮 Améliorations possibles
-Système de notation et avis pour les vendeurs
+## 🔮 Améliorations possibles
 
-Intégration d’un moyen de paiement en ligne (Stripe, PayPal, etc.)
+- Système de notation et avis pour les vendeurs
 
-Fonctionnalités sociales (wishlist, recommandations, etc.)
+- Intégration d’un moyen de paiement en ligne (Stripe, PayPal, etc.)
 
-📜 Licence
-Ce projet est publié sous licence Open Source.
+- Fonctionnalités sociales (wishlist, recommandations, etc.)
 
-👤 Auteur
+## 📜 Licence
+Ce projet est publié sous licence MIT.
+
+## 👤 Auteur
 Développé par Perret Nicolas
-📎 LinkedIn
+📎 LinkedIn(https://www.linkedin.com/in/nicolas-perret01/)
 
 
